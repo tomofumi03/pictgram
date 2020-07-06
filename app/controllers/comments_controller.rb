@@ -2,19 +2,19 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    topic = Topic.find(params[:topic_id])
-    @comment = topic.comments.build(comment_params)
-    @comment.user_id = current_user.id
+    topic = Tocic.find(params[:topic_id])
+    @comments = Comment.new
+    @comments.user_id = current_user.id
+    @comments.topic_id = params[:topic_id]
+
     if @comments.save
-      flash[:success] = "コメントしました"
-      redirect_back(fallback_location: root_path)
+      redirect_to topics_path, success: 'コメントしました'
     else
-      flash[:danger] ="コメントできませんでした"
-      redirect_back(fallback_location: root_path)
+      redirect_to topics_path, danger: 'コメントできませんでした'
     end
   end
 
-private
+  private
 
   def comment_params
     params.require(:comment).permit(:content)
