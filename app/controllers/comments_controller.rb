@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
   def index
     @topic = Topic.find(params[:id])
     @comments = @topic.comments
@@ -8,7 +7,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    topic = Tocic.find(params[:topic_id])
+  
     @comment = Comment.new
     @comment.user_id = current_user.id
     @comment.topic_id = params[:topic_id]
